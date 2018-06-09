@@ -1,0 +1,163 @@
+# Maintainer: Alexey Pavlov <alexpux@gmail.com>
+# Contributor: Martell Malone <martellmalone@gmail.com>
+# Contributor: Ray Donnelly <mingw.android@gmail.com>
+
+pkgname=pacman
+pkgver=5.0.1
+pkgrel=7
+pkgdesc="A library-based package manager with dependency support (MSYS2 port)"
+arch=('i686' 'x86_64')
+url="https://www.archlinux.org/pacman/"
+license=('GPL')
+groups=('base' 'base-devel')
+depends=('bash>=4.2.045'
+         #'dash'
+         #'busybox'
+         'gettext'
+         'gnupg'
+         'msys2-runtime'
+         #'libarchive'
+         'curl'
+         #'libgpgme'
+         'pacman-mirrors'
+         'msys2-keyring'
+         'which'
+         'bzip2'
+         'xz')
+optdepends=('diffutils' 'vim')
+checkdepends=('python2')
+makedepends=('asciidoc'
+             'autoconf'
+             'automake-wrapper'
+             'doxygen'
+             'libtool'
+             'git'
+             'gettext-devel'
+             'heimdal-devel'
+             'libarchive-devel'
+             'libcurl-devel'
+             'libgpgme-devel'
+             'libsqlite-devel'
+             'libunistring-devel')
+provides=('pacman-contrib')
+conflicts=('pacman-contrib')
+replaces=('pacman-contrib')
+# options=('!strip' 'debug')
+backup=("etc/pacman.conf"
+        "etc/makepkg.conf"
+        "etc/makepkg_mingw32.conf"
+        "etc/makepkg_mingw64.conf")
+source=(https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz{,.sig}
+        "pacman.conf"
+        "makepkg.conf"
+        "makepkg_mingw32.conf"
+        "makepkg_mingw64.conf"
+        "makepkg-mingw"
+        0000-pacman-msysize.patch
+        "0001-more-debugging-info.patch"
+        "0002-Add-util-msys2.-c-h-and-rebase-db-msys2.-c.patch"
+        "0003-use-busybox-for-msys2-post-installs.patch"
+        "0004-Link-pacman-with-static-libraries.patch"
+        "0005-Hack-gettext-libalpm-pkg-config-static-link.patch"
+        "0006-makepkg-avoid-creating-.tar-files-with-extended-attr.patch"
+        "0007-exe-interp-ignore-file-conflict.patch"
+        "0008-answer-yes-by-default.patch")
+sha256sums=('8bd5f407ce8e05c4be8f1c4be4d8dcc8550ea5e494937da5220ea2c23cbb8e04'
+            'SKIP'
+            '6024bbf50cc92236b7b437430cb9e4180da91925cdc19a5a7910fe172931cfb6'
+            '3d2f8a8c363a76ebd417e883cf28dc093e611b1360fe684d40e29540cbcb7ef2'
+            '364552567f4d436e12f5b19634dd06ed0a9ae92a72d3e3f08ccbfaa8b69f48a5'
+            'c0e4f55fa0c4b7b9f772f59f0f3d5e61cabc81cad770ed84171e833f73b7d034'
+            '40109ac4f4e200ae9f76864231527f5f1049c27800e78d04656fcf5844ed789d'
+            '2a6990aa1cf2941ef45a52fce81ca6e19caacba857b55e7764e67321422c0a16'
+            '24ea2c8dca37847e04894ebfd05d1cf5df49dc0c8089f5581c99caa19b77a7ef'
+            '928ed3ab09ec57dfd652112bc881b06ef0978f4dcfebb87c43822ea8ad7557a8'
+            '23132552a388b238acf8bf650b5c2aa08cf3de63c647e84ad551807c4edfeb1e'
+            '1ec59e4262546a4f25432a9194adadd039641f61225c71e56464dc641ae4a299'
+            '1c71c5f38a408fbc027db164730739e644047706a0ea3f8330ea1666a58e3e91'
+            '3422115a859547b25babb5181301a0e9a485d6bc5de5169c828d59fd88486952'
+            'a88d4531283d5b85cde5793c8867bb554fdac7513f948f172c0d64ea0ca544f9'
+            'e4f6e17af19e17e745a9f1c6b8402f5896229062c82167cb61f8e7d29eda716c')
+
+prepare() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+  patch -p1 -i ${srcdir}/0000-pacman-msysize.patch
+  patch -p1 -i ${srcdir}/0001-more-debugging-info.patch
+  #git am "${srcdir}"/0002-Add-util-msys2.-c-h-and-rebase-db-msys2.-c.patch
+  #git am "${srcdir}"/0003-use-busybox-for-msys2-post-installs.patch
+  patch -p1 -i ${srcdir}/0004-Link-pacman-with-static-libraries.patch
+  patch -p1 -i ${srcdir}/0005-Hack-gettext-libalpm-pkg-config-static-link.patch
+  patch -p1 -i ${srcdir}/0006-makepkg-avoid-creating-.tar-files-with-extended-attr.patch
+  patch -p1 -i ${srcdir}/0007-exe-interp-ignore-file-conflict.patch
+  patch -p1 -i ${srcdir}/0008-answer-yes-by-default.patch
+
+  autoreconf -fi
+}
+
+build() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+
+  export PKG_CONFIG="/usr/bin/pkg-config --static"
+  ./configure \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --enable-static \
+    --disable-shared \
+    --enable-doc \
+    --enable-doxygen \
+    --disable-git-version \
+    --with-scriptlet-shell=/usr/bin/bash \
+    --with-pkg-ext=.pkg.tar.xz
+
+  make
+  make -C contrib
+}
+
+check() {
+  make -C "${pkgname}-${pkgver}" check
+}
+
+package() {
+  cd ${srcdir}/${pkgname}-${pkgver}
+  make -j1 DESTDIR=${pkgdir} install
+  make -j1 DESTDIR=${pkgdir} -C contrib install
+
+  # install Arch specific stuff
+  install -dm755 ${pkgdir}/etc
+  install -m644 ${srcdir}/pacman.conf ${pkgdir}/etc/pacman.conf
+
+  case "${CARCH}" in
+  i686)
+    mycarch="i686"
+    mychost="i686-pc-msys"
+    myflags="-march=i686"
+  ;;
+  x86_64)
+    mycarch="x86_64"
+    mychost="x86_64-pc-msys"
+    myflags="-march=x86-64"
+  ;;
+  esac
+
+  install -m644 ${srcdir}/makepkg.conf ${pkgdir}/etc/
+  install -m644 ${srcdir}/makepkg_mingw32.conf ${pkgdir}/etc/
+  install -m644 ${srcdir}/makepkg_mingw64.conf ${pkgdir}/etc/
+  install -m755 ${srcdir}/makepkg-mingw ${pkgdir}/usr/bin/
+
+  # set things correctly in the default conf file
+  sed -i ${pkgdir}/etc/makepkg.conf \
+    -e "s|@CARCH[@]|${mycarch}|g" \
+    -e "s|@CHOST[@]|${mychost}|g" \
+    -e "s|@CARCHFLAGS[@]|${myflags}|g"
+
+  # put bash_completion in the right location
+  install -dm755 ${pkgdir}/usr/share/bash-completion/completions
+  mv ${pkgdir}/etc/bash_completion.d/pacman \
+    ${pkgdir}/usr/share/bash-completion/completions
+  rmdir ${pkgdir}/etc/bash_completion.d
+
+  for f in makepkg pacman-key; do
+    ln -s pacman "${pkgdir}/usr/share/bash-completion/completions/$f"
+  done
+}
