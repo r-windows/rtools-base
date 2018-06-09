@@ -8,7 +8,7 @@ pkgdesc="Multi-protocol file transfer utility"
 arch=('i686' 'x86_64')
 url="https://curl.haxx.se"
 license=('MIT')
-makedepends=('zlib-devel')
+makedepends=('openssl-devel' 'zlib-devel')
 options=('!libtool' 'strip' '!debug')
 source=("https://curl.haxx.se/download/${pkgname}-${pkgver}.tar.bz2"{,.asc}
         curl-7.55.1-msys2.patch
@@ -40,10 +40,6 @@ build() {
     --enable-ipv6 \
     --disable-hidden-symbols \
     --disable-ares \
-    --with-gssapi \
-    --enable-sspi \
-    --enable-ldap \
-    --enable-ldaps \
     --without-libidn2 \
     --without-libmetalink \
     --without-librtmp \
@@ -51,14 +47,12 @@ build() {
     --without-spnego \
     --without-random \
     --with-ssl \
-    --with-wissl \
     --without-winidn \
     --without-gnutls \
     --without-nghttp2 \
     --with-zlib \
-    --with-libpsl \
-    --without-ca-bundle \
-    --without-ca-path \
+    --without-libpsl \
+    --with-ca-bundle=/usr/ssl/certs/ca-bundle.crt \
     ac_cv_func_setmode=yes
 
   make
@@ -66,7 +60,7 @@ build() {
 }
 
 package_curl() {
-  depends=('libcurl' 'zlib')
+  depends=('ca-certificates' 'libcurl' 'openssl' 'zlib')
   groups=('base')
 
   mkdir -p ${pkgdir}/usr/bin
@@ -79,7 +73,7 @@ package_curl() {
 
 package_libcurl() {
   pkgdesc="Multi-protocol file transfer library (runtime)"
-  depends=('zlib')
+  depends=('ca-certificates' 'openssl' 'zlib')
   groups=('libraries')
 
   mkdir -p ${pkgdir}/usr/bin
@@ -88,7 +82,7 @@ package_libcurl() {
 
 package_libcurl-devel() {
   pkgdesc="Libcurl headers and libraries"
-  depends=("libcurl=${pkgver}" 'zlib-devel')
+  depends=("libcurl=${pkgver}" 'openssl-devel' 'zlib-devel')
   options=('staticlibs')
   groups=('development')
 
