@@ -20,6 +20,8 @@ sed -i 's/^CheckSpace/#CheckSpace/g' /etc/pacman.conf
 pacman --noconfirm -Syu
 pacman --noconfirm -Rcsu mingw-w64-x86_64-toolchain mingw-w64-i686-toolchain
 pacman --noconfirm --needed -S git patch libtool make autoconf automake gcc findutils bison tar zip p7zip flex gettext wget texinfo
+repman add rtools "https://dl.bintray.com/rtools/${BINTRAY_REPOSITORY}"
+pacman --noconfirm --needed --noprogressbar --sync rtools/pacman-mirrors
 
 # Detect
 list_commits  || failure 'Could not detect added commits'
@@ -30,7 +32,7 @@ define_build_order || failure 'Could not determine build order'
 
 # Build
 message 'Building packages' "${packages[@]}"
-execute 'Updating system' update_system
+#execute 'Updating system' update_system
 execute 'Approving recipe quality' check_recipe_quality
 
 for package in "${packages[@]}"; do

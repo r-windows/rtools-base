@@ -4,7 +4,7 @@
 
 pkgname=pacman
 pkgver=5.0.1
-pkgrel=7
+pkgrel=9007
 pkgdesc="A library-based package manager with dependency support (MSYS2 port)"
 arch=('i686' 'x86_64')
 url="https://www.archlinux.org/pacman/"
@@ -38,7 +38,8 @@ makedepends=('asciidoc'
              'libcurl-devel'
              'libgpgme-devel'
              'libsqlite-devel'
-             'libunistring-devel')
+             'libunistring-devel'
+             'pkg-config')
 provides=('pacman-contrib')
 conflicts=('pacman-contrib')
 replaces=('pacman-contrib')
@@ -64,7 +65,7 @@ source=(https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz{,
         "0008-answer-yes-by-default.patch")
 sha256sums=('8bd5f407ce8e05c4be8f1c4be4d8dcc8550ea5e494937da5220ea2c23cbb8e04'
             'SKIP'
-            '6024bbf50cc92236b7b437430cb9e4180da91925cdc19a5a7910fe172931cfb6'
+            'SKIP'
             '3d2f8a8c363a76ebd417e883cf28dc093e611b1360fe684d40e29540cbcb7ef2'
             '364552567f4d436e12f5b19634dd06ed0a9ae92a72d3e3f08ccbfaa8b69f48a5'
             'c0e4f55fa0c4b7b9f772f59f0f3d5e61cabc81cad770ed84171e833f73b7d034'
