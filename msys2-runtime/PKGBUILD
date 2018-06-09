@@ -4,7 +4,7 @@
 pkgbase=msys2-runtime
 pkgname=('msys2-runtime' 'msys2-runtime-devel')
 pkgver=2.10.0
-pkgrel=3
+pkgrel=9000
 pkgdesc="Cygwin POSIX emulation engine"
 arch=('i686' 'x86_64')
 url="https://www.cygwin.com/"
@@ -15,6 +15,7 @@ makedepends=('cocom'
              'perl'
              'gcc'
              'make'
+             'mingw-w64-cross-crt-git'
              'mingw-w64-cross-gcc'
              'mingw-w64-cross-zlib'
              'zlib-devel'
@@ -70,7 +71,7 @@ sha256sums=('SKIP'
             '06ba3acae156d3e409355cda6b81fc18f1f6f5839676c4f7d8d1970e2fd4d31c'
             '09972073fe07623ad8bbfdec9c7c33fd75e12cd9d237aef3c04468a9aefa4afd'
             'ac80823274db00b877f1e925426da1a709f00b211f77e30fe4448f5c6c31194a'
-            'a0fe210a8ae05f0a17a06ff79736d0908a6c3dc0fc6db444e5c4d050b84b779d'
+            'SKIP'
             '7cba394680f874b23fa77ea295d17f4b2a2a5f64bd376cd6afd6cf34b05f659b'
             '6bf4d9abd0ec1cf3de0868df81792d3cdf4d857eb8002fd9dd8505f9541a8c29')
 
