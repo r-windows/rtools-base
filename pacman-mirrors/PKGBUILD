@@ -22,4 +22,5 @@ package() {
   install -m644 ${srcdir}/mirrorlist.msys ${pkgdir}/etc/pacman.d/
   install -m644 ${srcdir}/mirrorlist.mingw32 ${pkgdir}/etc/pacman.d/
   install -m644 ${srcdir}/mirrorlist.mingw64 ${pkgdir}/etc/pacman.d/
+  install -m644 ${srcdir}/mirrorlist.rtools ${pkgdir}/etc/pacman.d/
 }
