@@ -1,0 +1,12 @@
+diff -aurp make-4.2.1-orig/job.c make-4.2.1/job.c
+--- make-4.2.1-orig/job.c	2018-06-09 12:56:36.000000000 +0200
++++ make-4.2.1/job.c	2018-06-09 12:57:54.000000000 +0200
+@@ -75,7 +75,7 @@ char * vms_strsignal (int status);
+ 
+ #else
+ 
+-const char *default_shell = "/bin/sh";
++const char *default_shell = "sh";
+ int batch_mode_shell = 0;
+ 
+ #endif
