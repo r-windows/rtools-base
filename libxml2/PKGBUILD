@@ -2,11 +2,11 @@
 
 pkgname=('libxml2' 'libxml2-devel' 'libxml2-python')
 pkgver=2.9.7
-pkgrel=2
+pkgrel=9002
 pkgdesc="XML parsing library, version 2"
 arch=(i686 x86_64)
 license=('MIT')
-makedepends=('python2' 'python3' 'icu-devel>=59.1' 'libreadline-devel' 'ncurses-devel' 'liblzma-devel' 'zlib-devel')
+makedepends=('python2' 'python3' 'libreadline-devel' 'ncurses-devel' 'liblzma-devel' 'zlib-devel')
 url="http://www.xmlsoft.org/"
 source=(http://xmlsoft.org/sources/${pkgname}-${pkgver}.tar.gz
         https://www.w3.org/XML/Test/xmlts20130923.tar.gz
@@ -70,7 +70,7 @@ build() {
     --target=${CHOST} \
     --enable-ipv6 \
     --with-history \
-    --with-icu \
+    --without-icu \
     --with-python=/usr/bin/python2 \
     --with-html-dir=/usr/share/doc \
     --with-html-subdir=libxml2/html
@@ -87,7 +87,7 @@ check() {
 }
 
 package_libxml2() {
-  depends=('coreutils' 'icu>=59.1' 'liblzma' 'libreadline' 'ncurses' 'zlib')
+  depends=('coreutils' 'liblzma' 'libreadline' 'ncurses' 'zlib')
   groups=('libraries')
   install=libxml2.install
 
@@ -103,7 +103,7 @@ package_libxml2-devel() {
   pkgdesc="Libxml2 headers and libraries"
   groups=('development')
   options=('staticlibs')
-  depends=("libxml2=${pkgver}" 'icu-devel>=59.1' 'libreadline-devel' 'ncurses-devel' 'liblzma-devel' 'zlib-devel')
+  depends=("libxml2=${pkgver}" 'libreadline-devel' 'ncurses-devel' 'liblzma-devel' 'zlib-devel')
 
   mkdir -p ${pkgdir}/usr/{bin,share}
   cp -f ${srcdir}/dest/usr/bin/*-config ${pkgdir}/usr/bin/
