@@ -3,7 +3,7 @@
 ##
 
 Server = https://dl.bintray.com/r-windows/rtools
-SigLevel = Optional
+SigLevel = Never
 
 ## Primary
 ## msys2.org

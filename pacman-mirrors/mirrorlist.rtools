@@ -3,4 +3,4 @@
 ##
 
 Server = https://dl.bintray.com/rtools/$arch
-SigLevel = Optional
+SigLevel = Never
