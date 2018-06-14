@@ -2,7 +2,7 @@
 ## 32-bit Mingw-w64 repository mirrorlist
 ##
 
-Server = https://dl.bintray.com/r-windows/rtools
+Server = https://dl.bintray.com/rtools/mingw32
 SigLevel = Never
 
 ## Primary
