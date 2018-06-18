@@ -2,6 +2,7 @@
 # Contributor: Martell Malone <martellmalone@gmail.com>
 # Contributor: Ray Donnelly <mingw.android@gmail.com>
 # Rtools: Jeroen Ooms <jeroenooms@gmail.com>
+# Note: pacman statically links libcurl, so custom curl needs to be available at build time.
 
 pkgname=pacman
 pkgver=5.0.1
@@ -18,7 +19,8 @@ depends=('bash>=4.2.045'
          'gnupg'
          'msys2-runtime'
          #'libarchive'
-         'curl'
+         #'curl'
+         'curl-ca-bundle'
          #'libgpgme'
          'pacman-mirrors'
          'msys2-keyring'

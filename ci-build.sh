@@ -21,7 +21,7 @@ pacman --noconfirm -Syu
 pacman --noconfirm -Rcsu mingw-w64-x86_64-toolchain mingw-w64-i686-toolchain
 pacman --noconfirm --needed -S pkg-config git patch libtool make autoconf automake gcc findutils bison tar zip p7zip flex gettext wget texinfo
 repman add rtools "https://dl.bintray.com/rtools/${BINTRAY_REPOSITORY}"
-pacman --noconfirm --needed --noprogressbar --sync rtools/pacman-mirrors rtools/curl-ca-bundle libexpat-devel
+pacman --noconfirm --needed --noprogressbar --sync rtools/pacman-mirrors rtools/curl-ca-bundle rtools/libcurl-devel libexpat-devel
 
 # Detect
 list_commits  || failure 'Could not detect added commits'
