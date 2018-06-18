@@ -1,6 +1,7 @@
 # Maintainer: Alexey Pavlov <alexpux@gmail.com>
 # Contributor: Martell Malone <martellmalone@gmail.com>
 # Contributor: Ray Donnelly <mingw.android@gmail.com>
+# Rtools: Jeroen Ooms <jeroenooms@gmail.com>
 
 pkgname=pacman
 pkgver=5.0.1
