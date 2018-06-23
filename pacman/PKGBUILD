@@ -6,7 +6,7 @@
 
 pkgname=pacman
 pkgver=5.0.1
-pkgrel=9002
+pkgrel=9003
 pkgdesc="A library-based package manager with dependency support (MSYS2 port)"
 arch=('i686' 'x86_64')
 url="https://www.archlinux.org/pacman/"
@@ -15,6 +15,7 @@ groups=('base' 'base-devel')
 depends=('bash>=4.2.045'
          #'dash'
          #'busybox'
+         'expat'
          'gettext'
          'gnupg'
          'msys2-runtime'
@@ -39,6 +40,7 @@ makedepends=('asciidoc'
              'heimdal-devel'
              'libarchive-devel'
              'libcurl-devel'
+             'libexpat-devel'
              'libgpgme-devel'
              'libsqlite-devel'
              'libunistring-devel'
@@ -77,7 +79,7 @@ sha256sums=('8bd5f407ce8e05c4be8f1c4be4d8dcc8550ea5e494937da5220ea2c23cbb8e04'
             '24ea2c8dca37847e04894ebfd05d1cf5df49dc0c8089f5581c99caa19b77a7ef'
             '928ed3ab09ec57dfd652112bc881b06ef0978f4dcfebb87c43822ea8ad7557a8'
             '23132552a388b238acf8bf650b5c2aa08cf3de63c647e84ad551807c4edfeb1e'
-            '1ec59e4262546a4f25432a9194adadd039641f61225c71e56464dc641ae4a299'
+            'SKIP'
             '1c71c5f38a408fbc027db164730739e644047706a0ea3f8330ea1666a58e3e91'
             '3422115a859547b25babb5181301a0e9a485d6bc5de5169c828d59fd88486952'
             'a88d4531283d5b85cde5793c8867bb554fdac7513f948f172c0d64ea0ca544f9'
