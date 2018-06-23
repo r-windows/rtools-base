@@ -17,18 +17,36 @@ Function InstallMSYS32 {
 	del $tarPath
 }
 
+# The Rtools 32 it installer cannot be installed on AppVeyor (win64) so we use the zip file
+Function InstallRTOOLS32 {
+	Write-Host "Installing RTOOLS 32-bit..." -ForegroundColor Cyan
+	$zipPath = "$($env:USERPROFILE)\rtools32.7z"
+	(New-Object Net.WebClient).DownloadFile('https://dl.bintray.com/rtools/installer/rtools40-i686.7z', $zipPath)
+	7z x $zipPath -y -oC:\ | Out-Null
+	C:\rtools40\usr\bin\bash.exe --login -c exit 2>$null
+	Write-Host "InnoSetup installation: Done" -ForegroundColor Green
+}
+
+Function InstallRTOOLS64 {
+	Write-Host "Installing RTOOLS 64-bit..." -ForegroundColor Cyan
+	(New-Object Net.WebClient).DownloadFile('https://dl.bintray.com/rtools/installer/rtools40-x86_64.exe', '..\installer.exe')
+	Start-Process -FilePath ..\installer.exe -ArgumentList /SILENT -NoNewWindow -Wait
+	Write-Host "InnoSetup installation: Done" -ForegroundColor Green
+}
+
 function bash($command) {
     Write-Host $command -NoNewline
-    cmd /c start /wait C:\msys32\usr\bin\sh.exe --login -c $command
+    cmd /c start /wait C:\rtools40\usr\bin\sh.exe --login -c $command
     Write-Host " - OK" -ForegroundColor Green
 }
 
-function msys32boostrap {
+function bootstrap {
 	if($env:MSYS_VERSION -eq 'msys32') {
-		InstallMSYS32
-		bash 'pacman -Sy --noconfirm pacman pacman-mirrors'
-
-		# May upgrade runtime, need to exit afterwards
-		bash 'pacman -Syyuu --noconfirm --ask 20'
+		InstallRTOOLS32
+	} else {
+		InstallRTOOLS64
 	}
+	bash 'pacman -Sy --noconfirm pacman pacman-mirrors'
+	bash 'pacman -Syyuu --noconfirm --ask 20'
 }
+

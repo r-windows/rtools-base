@@ -21,11 +21,11 @@ matrix:
 
 install:
     - ps: Import-Module .\scripts.ps1
-    - ps: msys32boostrap
+    - ps: bootstrap
 
 build_script:
-  - C:\%MSYS_VERSION%\usr\bin\pacman --noconfirm --ask 20 --sync --refresh --refresh --sysupgrade --sysupgrade
-  - C:\%MSYS_VERSION%\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/ci-build.sh"
+  - C:\rtools40\usr\bin\pacman --noconfirm --ask 20 --sync --refresh --refresh --sysupgrade --sysupgrade
+  - C:\rtools40\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/ci-build.sh"
 
 test: off
 
