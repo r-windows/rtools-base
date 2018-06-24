@@ -37,7 +37,7 @@ Function InstallRtoolsExe {
 	$tmp = "$($env:USERPROFILE)\${RTOOLS_EXE}"	
 	(New-Object Net.WebClient).DownloadFile($RTOOLS_MIRROR + $RTOOLS_EXE, $tmp)
 	Start-Process -FilePath $tmp -ArgumentList /VERYSILENT -NoNewWindow -Wait
-	#CheckExitCode "Failed to install ${RTOOLS_EXE}"
+	CheckExitCode "Failed to install ${RTOOLS_EXE}"
 	Write-Host "Installation of ${RTOOLS_EXE} done!" -ForegroundColor Green
 }
 
@@ -48,14 +48,7 @@ function bash($command) {
 }
 
 function InstallRtools {
-	if($env:MSYS_VERSION -eq 'msys32') {
-		InstallRtoolsZip
-	} else {
-		InstallRtoolsExe
-		#InstallRtoolsZip
-	}
-
-	# Enable upstream msys2 and sync
+	InstallRtoolsZip
 	bash 'pacman -Sy --noconfirm pacman pacman-mirrors'
 	bash 'pacman -Syyu --noconfirm --ask 20'		
 }

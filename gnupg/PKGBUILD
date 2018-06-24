@@ -2,7 +2,7 @@
 
 pkgname=gnupg
 pkgver=1.4.23
-pkgrel=1
+pkgrel=9002
 pkgdesc='Complete and free implementation of the OpenPGP standard'
 url='https://gnupg.org/'
 license=('GPL')
