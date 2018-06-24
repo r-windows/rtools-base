@@ -25,7 +25,7 @@ install:
 
 build_script:
   - C:\rtools40\usr\bin\pacman --noconfirm -Syy
-  - C:\rtools40\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/fullindex.sh"
+  - C:\rtools40\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/ci-build.sh"
 
 test: off
 
