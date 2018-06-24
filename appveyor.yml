@@ -7,21 +7,22 @@ environment:
   BINTRAY_USER: jeroen
   BINTRAY_TARGET: rtools
   BINTRAY_PACKAGE: msys
+  PACMAN_REPOSITORY: rtools
   BUILD_URL: https://ci.appveyor.com/project/$(APPVEYOR_ACCOUNT_NAME)/$(APPVEYOR_PROJECT_NAME)/build/$(APPVEYOR_BUILD_VERSION)
   matrix:
     - MSYS_VERSION: msys32
       BINTRAY_REPOSITORY: i686
-      PACMAN_REPOSITORY: rtools
+      RTOOLS_ARCH: i686
     - MSYS_VERSION: msys64
       BINTRAY_REPOSITORY: x86_64
-      PACMAN_REPOSITORY: rtools
+      RTOOLS_ARCH: x86_64
 
 matrix:
   fast_finish: true
 
 install:
     - ps: Import-Module .\scripts.ps1
-    - ps: bootstrap
+    - ps: InstallRtools
 
 build_script:
   - C:\rtools40\usr\bin\pacman --noconfirm -Syy
