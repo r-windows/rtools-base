@@ -96,7 +96,8 @@ _download_previous() {
     local filenames=("${@}")
     [[ "${DEPLOY_PROVIDER}" = bintray ]] || return 1
     for filename in "${filenames[@]}"; do
-        if ! wget --no-verbose "https://dl.bintray.com/${BINTRAY_TARGET}/${BINTRAY_REPOSITORY}/${filename}"; then
+        # Don't use https here in case the build messes with ca-certificates
+        if ! wget --no-verbose "http://dl.bintray.com/${BINTRAY_TARGET}/${BINTRAY_REPOSITORY}/${filename}"; then
             rm -f "${filenames[@]}"
             return 1
         fi

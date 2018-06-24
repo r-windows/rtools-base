@@ -24,8 +24,8 @@ install:
     - ps: bootstrap
 
 build_script:
-  - C:\rtools40\usr\bin\pacman --noconfirm --ask 20 --sync --refresh --refresh --sysupgrade --sysupgrade
-  - C:\rtools40\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/ci-build.sh"
+  - C:\rtools40\usr\bin\pacman --noconfirm -Syy
+  - C:\rtools40\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/fullindex.sh"
 
 test: off
 

@@ -21,7 +21,7 @@ Function InstallMSYS32 {
 Function InstallRTOOLS32 {
 	Write-Host "Installing RTOOLS 32-bit..." -ForegroundColor Cyan
 	$zipPath = "$($env:USERPROFILE)\rtools32.7z"
-	(New-Object Net.WebClient).DownloadFile('https://dl.bintray.com/rtools/installer/rtools40-i686.7z', $zipPath)
+	(New-Object Net.WebClient).DownloadFile('https://ci.appveyor.com/api/buildjobs/87iw2ewy85ajqnjx/artifacts/rtools40-i686.7z', $zipPath)
 	7z x $zipPath -y -oC:\ | Out-Null
 	C:\rtools40\usr\bin\bash.exe --login -c exit 2>$null
 	Write-Host "InnoSetup installation: Done" -ForegroundColor Green
@@ -29,7 +29,7 @@ Function InstallRTOOLS32 {
 
 Function InstallRTOOLS64 {
 	Write-Host "Installing RTOOLS 64-bit..." -ForegroundColor Cyan
-	(New-Object Net.WebClient).DownloadFile('https://dl.bintray.com/rtools/installer/rtools40-x86_64.exe', '..\installer.exe')
+	(New-Object Net.WebClient).DownloadFile('https://ci.appveyor.com/api/buildjobs/s9gnxfknnq5ga1ff/artifacts/Output/rtools40-x86_64.exe', '..\installer.exe')
 	Start-Process -FilePath ..\installer.exe -ArgumentList /SILENT -NoNewWindow -Wait
 	Write-Host "InnoSetup installation: Done" -ForegroundColor Green
 }
@@ -46,7 +46,7 @@ function bootstrap {
 	} else {
 		InstallRTOOLS64
 	}
-	bash 'pacman -Sy --noconfirm pacman pacman-mirrors'
-	bash 'pacman -Syyuu --noconfirm --ask 20'
+	bash 'pacman -Sy --noconfirm wget bsdtar'
+	#bash 'pacman -Syyuu --noconfirm --ask 20'
 }
 
