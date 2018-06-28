@@ -167,4 +167,3 @@ package() {
     ln -s pacman "${pkgdir}/usr/share/bash-completion/completions/$f"
   done
 }
-
