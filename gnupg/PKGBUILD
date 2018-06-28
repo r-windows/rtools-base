@@ -82,3 +82,4 @@ package() {
   # ln -s "${pkgdir}"/usr/share/man/man1/gpg{2,}.1
   # rm "${pkgdir}/usr/share/gnupg/com-certs.pem" # FS#33059
 }
+

@@ -16,6 +16,10 @@ git fetch --quiet upstream
 # reduce time required to install packages by disabling pacman's disk space checking
 sed -i 's/^CheckSpace/#CheckSpace/g' /etc/pacman.conf
 
+# Revert patch: enable upstream msys2
+curl -L https://raw.githubusercontent.com/r-windows/rtools-installer/master/disable-msys.patch | patch -d/ -R -p0
+pacman -Syy
+
 # update from upstream
 #pacman --noconfirm -Syu
 #pacman --noconfirm -Rcsu mingw-w64-x86_64-toolchain mingw-w64-i686-toolchain
