@@ -1,6 +1,8 @@
 # Maintainer: Alexey Pavlov <alexpux@gmail.com>
 # Contributor: Martell Malone <martellmalone@gmail.com>
 # Contributor: Ray Donnelly <mingw.android@gmail.com>
+# Rtools: Jeroen Ooms <jeroenooms@gmail.com>
+# Note: pacman statically links libcurl, so custom curl needs to be available at build time.
 
 pkgname=pacman
 pkgver=5.1.1
@@ -13,11 +15,13 @@ groups=('base' 'base-devel')
 depends=('bash>=4.2.045'
          #'dash'
          #'busybox'
+         'expat'
          'gettext'
          'gnupg'
          'msys2-runtime'
          #'libarchive'
-         'curl'
+         #'curl'
+         'curl-ca-bundle'
          #'libgpgme'
          'pacman-mirrors'
          'msys2-keyring'
@@ -36,9 +40,11 @@ makedepends=('asciidoc'
              'heimdal-devel'
              'libarchive-devel'
              'libcurl-devel'
+             'libexpat-devel'
              'libgpgme-devel'
              'libsqlite-devel'
-             'libunistring-devel')
+             'libunistring-devel'
+             'pkg-config')
 provides=('pacman-contrib')
 conflicts=('pacman-contrib')
 replaces=('pacman-contrib')
@@ -69,7 +75,7 @@ source=(https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz{,
 sha256sums=('be04b9162d62d2567e21402dcbabb5bedfdb03909fa5ec6e8568e02ab325bd8d'
             'SKIP'
             'd47240396476eaf126b2f2a3f6ac77d5b397f5cc80b1c3700ba4fa355c4786c8'
-            '6024bbf50cc92236b7b437430cb9e4180da91925cdc19a5a7910fe172931cfb6'
+            'SKIP'
             '3d2f8a8c363a76ebd417e883cf28dc093e611b1360fe684d40e29540cbcb7ef2'
             '364552567f4d436e12f5b19634dd06ed0a9ae92a72d3e3f08ccbfaa8b69f48a5'
             'c0e4f55fa0c4b7b9f772f59f0f3d5e61cabc81cad770ed84171e833f73b7d034'
@@ -109,6 +115,10 @@ prepare() {
 }
 
 build() {
+
+  # Temp workarounnd for libarchive bug
+  export LIBS="-llz4"
+
   cd ${srcdir}/${pkgname}-${pkgver}
 
   PKG_CONFIG="/usr/bin/pkg-config --static" \
