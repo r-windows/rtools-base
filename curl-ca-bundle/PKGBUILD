@@ -4,7 +4,7 @@
 
 pkgname=curl-ca-bundle
 pkgver=1
-pkgrel=9002
+pkgrel=9100
 pkgdesc="Lightweight alternative to ca-certificates"
 arch=('any')
 url="https://curl.haxx.se/ca/cacert.pem"
