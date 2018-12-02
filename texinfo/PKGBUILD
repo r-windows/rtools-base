@@ -2,7 +2,7 @@
 
 pkgname=('texinfo' 'info' 'texinfo-tex')
 pkgver=5.2
-pkgrel=9000
+pkgrel=9100
 pkgdesc="Utilities to work with and produce manuals, ASCII text, and on-line documentation from a single source file"
 arch=('i686' 'x86_64')
 url="http://www.gnu.org/software/texinfo/"
@@ -14,7 +14,8 @@ source=(ftp://ftp.gnu.org/pub/gnu/${pkgname}/${pkgname}-${pkgver}.tar.xz{,.sig}
         0002-manifest.all.patch
         0003-be-content-with-older-gettext.msys2.patch
         0004-no-w32-stuff.msys2.patch
-        0005-fix-makeinfo-exeext.msys2.patch)
+        0005-fix-makeinfo-exeext.msys2.patch
+        0006-Fix-unescaped-left-braces-in-regexps-deprecated-sinc.patch)
 md5sums=('cb489df8a7ee9d10a236197aefdb32c5'
          'SKIP'
          '89724bac1ecbd1a57b1ea81e87f96f44'
@@ -22,7 +23,8 @@ md5sums=('cb489df8a7ee9d10a236197aefdb32c5'
          '7f4e9eced1af0abfbbf92d64d358c0b4'
          '2c498e6fda118db6cd13727b32ba5bf3'
          '8f1474fb6c56dbdc11010adefd5dcf1e'
-         'ac23191cd53eb9326657573c020ca6ef')
+         'ac23191cd53eb9326657573c020ca6ef'
+         '126e87cfa8801b69d6e9de832e400912')
 
 prepare() {
   cd ${srcdir}/${pkgname}-${pkgver}
@@ -32,6 +34,7 @@ prepare() {
   #patch -p1 -i ${srcdir}/0003-be-content-with-older-gettext.msys2.patch
   patch -p1 -i ${srcdir}/0004-no-w32-stuff.msys2.patch
   patch -p1 -i ${srcdir}/0005-fix-makeinfo-exeext.msys2.patch
+  patch -p1 -i ${srcdir}/0006-Fix-unescaped-left-braces-in-regexps-deprecated-sinc.patch
 
   autoreconf -fi
 }
