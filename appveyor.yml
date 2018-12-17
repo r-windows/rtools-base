@@ -25,6 +25,8 @@ install:
     - ps: InstallRtools
 
 build_script:
+  - C:\rtools40\usr\bin\curl -o "C:\M\curl\curl-7.61.1.tar.bz2" "https://curl.haxx.se/download/curl-7.61.1.tar.bz2"
+  - C:\rtools40\usr\bin\curl -o "C:\M\curl\curl-7.61.1.tar.bz2.asc" "https://curl.haxx.se/download/curl-7.61.1.tar.bz2.asc"
   - C:\rtools40\usr\bin\pacman --noconfirm -Syyu
   - C:\rtools40\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/ci-build.sh"
 

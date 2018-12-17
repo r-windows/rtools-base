@@ -3,7 +3,7 @@
 pkgbase=curl
 pkgname=('curl' 'libcurl' 'libcurl-devel')
 pkgver=7.61.1
-pkgrel=9100
+pkgrel=9200
 pkgdesc="Multi-protocol file transfer utility"
 arch=('i686' 'x86_64')
 url="https://curl.haxx.se"
