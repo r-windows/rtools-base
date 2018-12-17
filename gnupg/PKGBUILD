@@ -2,7 +2,7 @@
 
 pkgname=gnupg
 pkgver=1.4.23
-pkgrel=9002
+pkgrel=9200
 pkgdesc='Complete and free implementation of the OpenPGP standard'
 url='https://gnupg.org/'
 license=('GPL')
@@ -82,4 +82,3 @@ package() {
   # ln -s "${pkgdir}"/usr/share/man/man1/gpg{2,}.1
   # rm "${pkgdir}/usr/share/gnupg/com-certs.pem" # FS#33059
 }
-
