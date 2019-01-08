@@ -17,8 +17,8 @@ environment:
       BINTRAY_REPOSITORY: x86_64
       RTOOLS_ARCH: x86_64
 
-matrix:
-  fast_finish: true
+#matrix:
+#  fast_finish: true
 
 install:
     - ps: Import-Module .\scripts.ps1
