@@ -2,7 +2,7 @@
 
 pkgname=('libxml2' 'libxml2-devel' 'libxml2-python')
 pkgver=2.9.8
-pkgrel=9100
+pkgrel=9200
 pkgdesc="XML parsing library, version 2"
 arch=(i686 x86_64)
 license=('MIT')
