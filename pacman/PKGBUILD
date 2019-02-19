@@ -134,7 +134,7 @@ build() {
     --localstatedir=/var \
     --enable-static \
     --disable-shared \
-    --disable-doc \
+    --enable-doc \
     --enable-doxygen \
     --disable-git-version \
     --with-scriptlet-shell=/usr/bin/bash \
@@ -148,7 +148,7 @@ build() {
     --sysconfdir=/etc \
     --localstatedir=/var \
     --disable-git-version \
-    --disable-doc \
+    --enable-doc \
     --enable-doxygen
 
   make -j1
