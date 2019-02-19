@@ -140,16 +140,18 @@ build() {
     --with-scriptlet-shell=/usr/bin/bash \
     --with-pkg-ext=.pkg.tar.xz
 
-  make -j3
+  make -j1
 
   cd ${srcdir}/${pkgname}-contrib-1.0.0
   ./configure \
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
-    --disable-git-version
+    --disable-git-version \
+    --disable-doc \
+    --disable-doxygen
 
-  make
+  make -j1
   
 }
 
