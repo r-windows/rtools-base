@@ -33,6 +33,7 @@ checkdepends=('python2')
 makedepends=('asciidoc'
              'autoconf'
              'automake-wrapper'
+             'doxygen'
              'libtool'
              'git'
              'gettext-devel'
@@ -133,7 +134,7 @@ build() {
     --localstatedir=/var \
     --enable-static \
     --disable-shared \
-    --enable-doc \
+    --disable-doc \
     --disable-doxygen \
     --disable-git-version \
     --with-scriptlet-shell=/usr/bin/bash \
