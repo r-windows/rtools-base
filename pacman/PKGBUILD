@@ -135,7 +135,7 @@ build() {
     --enable-static \
     --disable-shared \
     --disable-doc \
-    --disable-doxygen \
+    --enable-doxygen \
     --disable-git-version \
     --with-scriptlet-shell=/usr/bin/bash \
     --with-pkg-ext=.pkg.tar.xz
@@ -149,7 +149,7 @@ build() {
     --localstatedir=/var \
     --disable-git-version \
     --disable-doc \
-    --disable-doxygen
+    --enable-doxygen
 
   make -j1
   
