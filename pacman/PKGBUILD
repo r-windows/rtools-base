@@ -127,6 +127,7 @@ build() {
 
   cd ${srcdir}/${pkgname}-${pkgver}
 
+  # J: added --disable-doc because asciidoc segfaults
   PKG_CONFIG="/usr/bin/pkg-config --static" \
   ./configure \
     --prefix=/usr \
@@ -134,7 +135,7 @@ build() {
     --localstatedir=/var \
     --enable-static \
     --disable-shared \
-    --enable-doc \
+    --disable-doc \
     --enable-doxygen \
     --disable-git-version \
     --with-scriptlet-shell=/usr/bin/bash \
