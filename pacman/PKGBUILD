@@ -148,8 +148,7 @@ build() {
     --sysconfdir=/etc \
     --localstatedir=/var \
     --disable-git-version \
-    --disable-doc \
-    --enable-doxygen
+    --disable-doc
 
   make -j1
   
