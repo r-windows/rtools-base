@@ -23,10 +23,11 @@ matrix:
 install:
     - ps: Import-Module .\scripts.ps1
     - ps: InstallRtools
+#    - ps: InstallMSYS32
 
 build_script:
-#  - C:\rtools40\usr\bin\curl -o "C:\M\curl\curl-7.61.1.tar.bz2" "https://curl.haxx.se/download/curl-7.61.1.tar.bz2"
-#  - C:\rtools40\usr\bin\curl -o "C:\M\curl\curl-7.61.1.tar.bz2.asc" "https://curl.haxx.se/download/curl-7.61.1.tar.bz2.asc"
+#  - C:\%MSYS_VERSION%\usr\bin\bash.exe --login -c exit
+#  - C:\%MSYS_VERSION%\usr\bin\pacman --noconfirm --ask 20 --sync --refresh --refresh --sysupgrade --sysupgrade
   - C:\rtools40\usr\bin\pacman --noconfirm -Syyu
   - C:\rtools40\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/ci-build.sh"
 

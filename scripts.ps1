@@ -50,5 +50,23 @@ function bash($command) {
 function InstallRtools {
 	InstallRtoolsZip
 	bash 'pacman -Sy --noconfirm pacman pacman-mirrors'
-	bash 'pacman -Syyu --noconfirm --ask 20'		
+	bash 'pacman -Syu --noconfirm --ask 20'		
+}
+
+Function InstallMSYS32 {
+	Write-Host "Installing MSYS2 32-bit..." -ForegroundColor Cyan
+
+	# download installer
+	$zipPath = "$($env:USERPROFILE)\msys2-i686-latest.tar.xz"
+	$tarPath = "$($env:USERPROFILE)\msys2-i686-latest.tar"
+	Write-Host "Downloading MSYS installation package..."
+	(New-Object Net.WebClient).DownloadFile('http://repo.msys2.org/distrib/msys2-i686-latest.tar.xz', $zipPath)
+
+	Write-Host "Untaring installation package..."
+	7z x $zipPath -y -o"$env:USERPROFILE" | Out-Null
+
+	Write-Host "Unzipping installation package..."
+	7z x $tarPath -y -oC:\ | Out-Null
+	del $zipPath
+	del $tarPath
 }

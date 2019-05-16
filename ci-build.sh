@@ -13,12 +13,10 @@ git_config user.email 'ci@msys2.org'
 git_config user.name  'MSYS2 Continuous Integration'
 git remote add upstream 'https://github.com/r-windows/rtools-base'
 git fetch --quiet upstream
-# reduce time required to install packages by disabling pacman's disk space checking
-sed -i 's/^CheckSpace/#CheckSpace/g' /etc/pacman.conf
 
-# Revert patch: enable upstream msys2
-curl -L https://raw.githubusercontent.com/r-windows/rtools-installer/master/disable-msys.patch | patch -d/ -R -p0
-pacman -Syy
+# Enable rtools + upstream msys2
+cp -f dummy.conf /etc/pacman.conf
+pacman -Syyu
 
 # update from upstream
 #pacman --noconfirm -Syu
@@ -42,7 +40,7 @@ execute 'Approving recipe quality' check_recipe_quality
 for package in "${packages[@]}"; do
     execute 'Building binary' makepkg --noconfirm --skippgpcheck --nocheck --syncdeps --rmdeps --cleanbuild
     execute 'Building source' makepkg --noconfirm --skippgpcheck --allsource --config '/etc/makepkg_mingw64.conf'
-    # execute 'Installing' yes:pacman --noprogressbar --upgrade *.pkg.tar.xz
+    execute 'Installing' yes:pacman --noprogressbar --upgrade *.pkg.tar.xz
     execute 'Checking Binaries' find ./pkg -regex ".*\.\(exe\|dll\|a\|pc\)" || true
     deploy_enabled && mv "${package}"/*.pkg.tar.xz artifacts
     deploy_enabled && mv "${package}"/*.src.tar.gz sourcepkg
