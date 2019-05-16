@@ -56,7 +56,7 @@ sha256sums=('SKIP'
             '774fda3da42da082578152c22d64b87f4bc63ad0412edb680f229b2ab5a1714e'
             '8fa80ce0e14f078cf6a7096d0587c27add38d647191d5c836a70761b4214ffb4'
             '05cca683b21ba0c8d22135f1f1f01da134be175de49fe7076200d7fe3efa4dce'
-            '0284f51a2b2be39e74592ef03fa24f6af4665c27d84b421f266ae503013eb104'
+            'SKIP'
             '50d8a52cc33501898e7a01b00e8e5965c1ef7f37f26039a4380788ce7639a04c')
 
 # Helper macros to help make tasks easier #
