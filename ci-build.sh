@@ -16,7 +16,7 @@ git fetch --quiet upstream
 
 # Enable rtools + upstream msys2
 cp -f dummy.conf /etc/pacman.conf
-pacman -Syyu
+pacman -Syyu --noconfirm
 
 # update from upstream
 #pacman --noconfirm -Syu
