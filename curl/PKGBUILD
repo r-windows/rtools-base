@@ -1,5 +1,4 @@
 # Maintainer: Alexey Pavlov <alexpux@gmail.com>
-
 pkgbase=curl
 pkgname=('curl' 'libcurl' 'libcurl-devel' 'curl-ca-bundle')
 pkgver=7.64.1
