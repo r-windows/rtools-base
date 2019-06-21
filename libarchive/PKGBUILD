@@ -1,0 +1,84 @@
+# Maintainer: Alexey Pavlov <alexpux@gmail.com>
+
+pkgname=('libarchive' 'libarchive-devel' 'bsdcpio' 'bsdtar')
+pkgver=3.3.3
+pkgrel=9000
+pkgdesc="library that can create and read several streaming archive formats"
+arch=('i686' 'x86_64')
+url="https://libarchive.org/"
+license=('BSD')
+groups=('libraries')
+depends=('gcc-libs' 'libbz2' 'libiconv' 'libexpat' 'liblzma' 'liblz4' 'liblzo2' 'libnettle' 'libxml2' 'zlib')
+makedepends=('libbz2-devel' 'libiconv-devel' 'libexpat-devel' 'liblzma-devel' 'liblz4-devel' 'liblzo2-devel' 'libnettle-devel' 'libxml2-devel' 'zlib-devel')
+options=('!strip' 'debug' 'libtool')
+# provides=('libarchive.so')
+source=("https://libarchive.org/downloads/$pkgname-$pkgver.tar.gz"
+        'libarchive-3.3.2-bcrypt-fix.patch'
+        'libarchive-3.3.1-msys2.patch')
+sha256sums=('ba7eb1781c9fbbae178c4c6bad1c6eb08edab9a1496c64833d1715d022b30e2e'
+            'ba26625c5ab8bcd4cf1b671a44f2b2f9241d4a43ed3223455e168672fe97ff95'
+            '239a135427e0e4ceaa992033e8b4825c69131acc919ac0f5578134c96a1bd718')
+
+prepare() {
+  cd "${pkgname}-${pkgver}"
+
+  # msysize patch
+  patch -Np1 -i "${srcdir}/libarchive-3.3.1-msys2.patch"
+  patch -Np1 -i "${srcdir}/libarchive-3.3.2-bcrypt-fix.patch"
+  autoreconf -ivf
+}
+
+build() {
+  cd "${pkgname}-${pkgver}"
+
+  ./configure \
+    --prefix=/usr \
+    --enable-shared \
+    --enable-static \
+    --without-libiconv-prefix \
+    --without-xml2 \
+    --without-cng
+  make
+  make DESTDIR="${srcdir}/dest" install
+}
+
+check() {
+  cd "${pkgname}-${pkgver}"
+
+  make check || true
+}
+
+package_bsdcpio() {
+  groups=('base')
+
+  mkdir -p ${pkgdir}/usr/bin
+  mkdir -p ${pkgdir}/usr/share/man/man1/
+  cp -f ${srcdir}/dest/usr/bin/bsdcpio.exe ${pkgdir}/usr/bin/
+  cp -f ${srcdir}/dest/usr/share/man/man1/bsdcpio.* ${pkgdir}/usr/share/man/man1/
+}
+
+package_bsdtar() {
+  groups=('base')
+
+  mkdir -p ${pkgdir}/usr/bin
+  mkdir -p ${pkgdir}/usr/share/man/man1/
+  cp -f ${srcdir}/dest/usr/bin/bsdtar.exe ${pkgdir}/usr/bin/
+  cp -f ${srcdir}/dest/usr/share/man/man1/bsdtar.* ${pkgdir}/usr/share/man/man1/
+}
+
+package_libarchive() {
+  mkdir -p ${pkgdir}/usr/bin
+  cp -f ${srcdir}/dest/usr/bin/*.dll ${pkgdir}/usr/bin/
+
+  install -D -m644 ${srcdir}/${pkgname}-${pkgver}/COPYING ${pkgdir}/usr/share/licenses/libarchive/COPYING
+}
+
+package_libarchive-devel() {
+  groups=('development')
+  options=('staticlibs')
+  depends=("libarchive=${pkgver}" 'libbz2-devel' 'libiconv-devel' 'liblzma-devel' 'liblz4-devel' 'liblzo2-devel' 'libnettle-devel' 'libxml2-devel' 'zlib-devel')
+
+  mkdir -p ${pkgdir}/usr
+  cp -rf ${srcdir}/dest/usr/include ${pkgdir}/usr/
+  cp -rf ${srcdir}/dest/usr/lib ${pkgdir}/usr/
+}
