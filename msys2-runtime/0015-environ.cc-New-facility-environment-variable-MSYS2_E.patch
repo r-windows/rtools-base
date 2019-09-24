@@ -33,8 +33,8 @@ index 508edea2b..d57fcaf9d 100644
    int tl = 0;
    char **pass_dstp;
 +#ifdef __MSYS__
-+  char *msys2_env_conv_excl_env = NULL;
-+  size_t msys2_env_conv_excl_count = 0;
++  static char r_arch[7] = "R_ARCH"; char *msys2_env_conv_excl_env = r_arch;
++  size_t msys2_env_conv_excl_count = 1;
 +#endif
    char **pass_env = (char **) alloca (sizeof (char *)
  				      * (n + winnum + SPENVS_SIZE + 1));
