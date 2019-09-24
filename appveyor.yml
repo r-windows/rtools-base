@@ -28,6 +28,7 @@ install:
 build_script:
 #  - C:\%MSYS_VERSION%\usr\bin\bash.exe --login -c exit
 #  - C:\%MSYS_VERSION%\usr\bin\pacman --noconfirm --ask 20 --sync --refresh --refresh --sysupgrade --sysupgrade
+  - xcopy /y dummy.conf C:\rtools40\etc\pacman.conf
   - C:\rtools40\usr\bin\pacman --noconfirm -Syyu
   - C:\rtools40\usr\bin\bash --login -c "$(cygpath ${APPVEYOR_BUILD_FOLDER})/ci-build.sh"
 

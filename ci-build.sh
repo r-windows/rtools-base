@@ -14,16 +14,9 @@ git_config user.name  'MSYS2 Continuous Integration'
 git remote add upstream 'https://github.com/r-windows/rtools-base'
 git fetch --quiet upstream
 
-# Enable rtools + upstream msys2
-cp -f dummy.conf /etc/pacman.conf
+# Install common build tools
 pacman -Syyu --noconfirm
-
-# update from upstream
-#pacman --noconfirm -Syu
-#pacman --noconfirm -Rcsu mingw-w64-x86_64-toolchain mingw-w64-i686-toolchain
 pacman --noconfirm --needed -S curl bsdtar pkg-config git patch libtool make autoconf automake gcc findutils bison tar zip p7zip flex gettext wget texinfo
-#repman add rtools "https://dl.bintray.com/rtools/${BINTRAY_REPOSITORY}"
-#pacman --noconfirm --needed --noprogressbar --sync rtools/pacman-mirrors rtools/curl-ca-bundle rtools/curl rtools/libcurl rtools/libcurl-devel libexpat-devel
 
 # Detect
 list_commits  || failure 'Could not detect added commits'
@@ -40,7 +33,10 @@ execute 'Approving recipe quality' check_recipe_quality
 for package in "${packages[@]}"; do
     execute 'Building binary' makepkg --noconfirm --skippgpcheck --nocheck --syncdeps --rmdeps --cleanbuild
     execute 'Building source' makepkg --noconfirm --skippgpcheck --allsource --config '/etc/makepkg_mingw64.conf'
-    #execute 'Installing' yes:pacman --noprogressbar --upgrade *.pkg.tar.xz
+    if [ "${package}" != "msys2-runtime" ]; then
+        # Cannot hotswap runtime from this bash script using that runtime
+        execute 'Installing' yes:pacman --noprogressbar --upgrade *.pkg.tar.xz
+    fi
     execute 'Checking Binaries' find ./pkg -regex ".*\.\(exe\|dll\|a\|pc\)" || true
     deploy_enabled && mv "${package}"/*.pkg.tar.xz artifacts
     deploy_enabled && mv "${package}"/*.src.tar.gz sourcepkg
