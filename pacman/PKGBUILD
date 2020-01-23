@@ -80,7 +80,7 @@ source=(https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz{,
 sha256sums=('1930c407265fd039cb3a8e6edc82f69e122aa9239d216d9d57b9d1b9315af312'
             'SKIP'
             '317f53819e35647a19138cb0d68e16206af4a80f52115a7cd622c4a367f914b7'
-            '65e60012ca3b1bc17385a696ac7ffb76b49e9373f709aeead74961fbce192c3b'
+            '87b392aacf3caa616ae311cb7a29b9c6fa700934dcaf781172a593fb84c37263'
             '40a46147ebb9b85f74d60d53a1bf911dfb32d85c65c2ee6e57bfd6d3d4aac848'
             'ba3a9b1be7521ca0a41ceb3bec36221794b316ea5cd0ed03eae88a9e4ed08673'
             'e300263140946bd90e293e19ef372873c247374a41117a8415d83e0d5d6e5599'
