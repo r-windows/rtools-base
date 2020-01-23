@@ -5,7 +5,7 @@
 # Note: pacman statically links libcurl, so custom curl needs to be available at build time.
 pkgname=pacman
 pkgver=5.2.1
-pkgrel=9500
+pkgrel=9600
 contrib_ver=1.2.0
 pkgdesc="A library-based package manager with dependency support (MSYS2 port)"
 arch=('i686' 'x86_64')
@@ -27,7 +27,8 @@ depends=('bash>=4.2.045'
          'msys2-keyring'
          'which'
          'bzip2'
-         'xz')
+         'xz'
+         'zstd')
 optdepends=('diffutils' 'vim')
 checkdepends=('python2')
 makedepends=('asciidoc'
@@ -70,19 +71,21 @@ source=(https://sources.archlinux.org/other/pacman/${pkgname}-${pkgver}.tar.gz{,
         "0007-exe-interp-ignore-file-conflict.patch"
         "0008-answer-yes-by-default.patch"
         "0009-msys-use-pipe-instead-socket.patch"
+        "0010-filelist-strcasecmp.patch"
+        "0011-update-ja-po-for-msys2.patch"
+        "0012-workaround-bsdtar-AD-account.patch"
         "0100-contrib.patch"
         "0101-contrib-pactree-gpgdir.patch"
-        "0010-filelist-strcasecmp.patch"
         Doxyfile.in)
 sha256sums=('1930c407265fd039cb3a8e6edc82f69e122aa9239d216d9d57b9d1b9315af312'
             'SKIP'
             '317f53819e35647a19138cb0d68e16206af4a80f52115a7cd622c4a367f914b7'
-            'b2e043d2719240c87ce4ac90b44a8dbd135eeaf4101df6e500a606cda0e15f28'
-            '3d2f8a8c363a76ebd417e883cf28dc093e611b1360fe684d40e29540cbcb7ef2'
-            '7a345127473629fe79c99bb16194e201989b2ebae5de37af98b2ae2e5488f97d'
-            'f2d127a03c8e47660cd2b0017453e74402470824b23139e1003b8a081e98e3bd'
+            '65e60012ca3b1bc17385a696ac7ffb76b49e9373f709aeead74961fbce192c3b'
+            '40a46147ebb9b85f74d60d53a1bf911dfb32d85c65c2ee6e57bfd6d3d4aac848'
+            'ba3a9b1be7521ca0a41ceb3bec36221794b316ea5cd0ed03eae88a9e4ed08673'
+            'e300263140946bd90e293e19ef372873c247374a41117a8415d83e0d5d6e5599'
             '684648d5b1246af9ce5b3afaadf201873269c5208057e8cbdbd409b4c0f22564'
-            'e1f880cbfea6e1d8d67cdb17bc07eaaa99421f65e688e6858ccbcbbb9a6b69d3'
+            '1f92a6dcb3ae631cb0bbf5e089417a2ff7b895e541739f3a49b126b80f185920'
             '24ea2c8dca37847e04894ebfd05d1cf5df49dc0c8089f5581c99caa19b77a7ef'
             '870b197b7d6379a9c1ebb5c449c902b21d75ec21e966a2e54af82501465180f7'
             '23132552a388b238acf8bf650b5c2aa08cf3de63c647e84ad551807c4edfeb1e'
@@ -92,9 +95,11 @@ sha256sums=('1930c407265fd039cb3a8e6edc82f69e122aa9239d216d9d57b9d1b9315af312'
             '52343bbf99da6408950e34dd84319e34724040f866c497c25e36b4ee54030e82'
             'e4f6e17af19e17e745a9f1c6b8402f5896229062c82167cb61f8e7d29eda716c'
             '9e8fe5ee78192b0407e80ad2e52cb27569c35974b6c26e465e3d55e19c03d108'
+            '93be4523fb8c3dd6b56eddfe0b09e666725a62eb43392fee336ba1a328f9ffdd'
+            '205b1655ea4cfac248aa8d268017979db0644ff2f627e5969c30547fdc9bcd8e'
+            'c242202f3526d5eaa21d321a1d0fa472697c50e8288175ebe93212356c78d1f1'
             '78a314a11377f7c9eb7bcd5f103a32734f2df0b3696df50bd38c7f6c754154d0'
             '4ff3f10a99e894f3ae8576227f60bff7e21a1d7a775f89d936e43501693e9618'
-            '93be4523fb8c3dd6b56eddfe0b09e666725a62eb43392fee336ba1a328f9ffdd'
             '8cc0a7b1a3390a8990cef242ac4a84d4eb03f367bc2a01c883908ff7c8d59427')
 
 prepare() {
@@ -110,6 +115,8 @@ prepare() {
   patch -p1 -i ${srcdir}/0008-answer-yes-by-default.patch
   patch -p1 -i ${srcdir}/0009-msys-use-pipe-instead-socket.patch
   patch -p1 -i ${srcdir}/0010-filelist-strcasecmp.patch
+  patch -p1 -i ${srcdir}/0011-update-ja-po-for-msys2.patch
+  patch -p1 -i ${srcdir}/0012-workaround-bsdtar-AD-account.patch
   
   cp ${srcdir}/Doxyfile.in doc/
 
@@ -142,6 +149,7 @@ build() {
     --with-scriptlet-shell=/usr/bin/bash \
     --with-pkg-ext=.pkg.tar.xz
 
+  make -C src/pacman/po update-gmo
   # doxygen segfaults in the first run :( so build again
   make -j3 || make
 
@@ -152,7 +160,7 @@ build() {
     --localstatedir=/var \
     --disable-git-version
 
-  make -j1
+  make
   
 }
 
