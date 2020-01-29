@@ -1,20 +1,22 @@
 # Rtools Base [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/r-windows/rtools-base)](https://ci.appveyor.com/project/jeroen/rtools-base)
 
-> Rtools Core Packages
+> Rtools40 msys2 runtime packages
 
-Core msys2 packages that were altered from [upstream](https://github.com/alexpux/msys2-packages) msys2. These are for the rtools environment itself, they do not contain the Rtools toolchain or packages. 
+A few core msys2 runtime packages that were altered from [upstream](https://github.com/alexpux/msys2-packages) msys2 to work better for R and CRAN.
+
+These packages are only needed to build the rtools40 runtime environment itself, regular R users and package developers don't need to be concerned with this at all. The mingw-w64 toolchains and c/c++ libraries for building R and R packages are in the [rtools-packages](https://github.com/r-windows/rtools-packages) repository.
 
 ## How it Works
 
-The Rtools runtime consists of subset of [msys2](https://www.msys2.org/) with a few alterations:
+The Rtools40 runtime consists of subset of [msys2](https://www.msys2.org/) with a few alterations:
 
  - [pacman-mirrors](pacman-mirrors/PKGBUILD) points to our custom rtools repos
- - [gnupg](gnupg/PKGBUILD) uses gpg1 instead of the much heaver gpg2
+ - [gnupg](gnupg/PKGBUILD) uses gpg1 instead of the much heavier gpg2
  - [curl](curl/PKGBUILD) uses our custom [curl-ca-bundle](curl-ca-bundle/PKGBUILD) instead of the annoying [ca-certificates](https://github.com/Alexpux/MSYS2-packages/blob/master/ca-certificates/PKGBUILD)
- - [pacman](pacman/PKGBUILD) has been rebuild with the above. Also we are still on 5.0.1.
+ - [pacman](pacman/PKGBUILD) has been rebuild with the above.
  - [tar](tar/PKGBUILD) has some custom patch from BDR for backward compatibility with old rtools
  - [texinfo](texinfo/PKGBUILD) ships texinfo 5 because I couldn't figure out how to build R with texinfo 6
- - [libxml2](libxml2/PKGBUILD) disabled ICU support because it is a pain on WinBuilder (Windows Vista)
+ - [libxml2](libxml2/PKGBUILD) disabled ICU which doesn't work on CRAN (Because Windows Vista)
  - [make](make/PKGBUILD) has a patch to find `sh` when called from cmd instead of bash
  - [msys2-runtime](msys2-runtime/PKGBUILD) has a patch to make msys2 not alter the `R_ARCH` 
 
