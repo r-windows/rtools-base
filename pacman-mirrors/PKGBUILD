@@ -2,7 +2,7 @@
 
 pkgname=pacman-mirrors
 pkgver=90000000
-pkgrel=5
+pkgrel=6
 pkgdesc="MSYS2 mirror list for use by rtools"
 arch=('any')
 url="https://cran.r-project.org/bin/windows/Rtools/"
