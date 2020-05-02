@@ -1,0 +1,24 @@
+From fdca30f82385b067f72ef746dfd80b63a0ffb750 Mon Sep 17 00:00:00 2001
+From: Gavin Smith <gavinsmith0123@gmail.com>
+Date: Sun, 18 Sep 2016 22:24:12 +0000
+Subject: [PATCH] fix "Negative repeat count does nothing"
+
+git-svn-id: svn://127.0.0.1/svn_repo/texinfo/trunk@7374 39fee189-59d7-47db-b5d4-205258b72aed
+---
+ ChangeLog                       | 8 ++++++++
+ tp/Texinfo/Convert/Plaintext.pm | 2 +-
+ 2 files changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/tp/Texinfo/Convert/Plaintext.pm b/tp/Texinfo/Convert/Plaintext.pm
+index 014218bab..2b911efcf 100644
+--- a/tp/Texinfo/Convert/Plaintext.pm
++++ b/tp/Texinfo/Convert/Plaintext.pm
+@@ -856,7 +856,7 @@ sub _compute_spaces_align_line($$$;$)
+   my $no_align = shift;
+ 
+   my $spaces_prepended;
+-  if ($line_width > $max_column or $no_align) {
++  if ($line_width >= $max_column or $no_align) {
+     $spaces_prepended = 0;
+   } elsif ($direction eq 'center') {
+     # if no int we may end up with floats...
