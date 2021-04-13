@@ -1,4 +1,4 @@
-# Maintainer: Alexey Pavlov <alexpux@gmail.com>
+# Maintainer: Jeroen Ooms
 
 pkgname=gnupg
 pkgver=1.4.23
@@ -54,6 +54,7 @@ prepare() {
 }
 
 build() {
+  CFLAGS+=" -fcommon"
   cd "${srcdir}/${pkgname}-${pkgver}"
   ./configure \
     --build=${CHOST} \

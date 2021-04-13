@@ -18,17 +18,11 @@ The Rtools40 runtime consists of subset of [msys2](https://www.msys2.org/) with 
  - [texinfo](texinfo/PKGBUILD) ships texinfo 5 because I couldn't figure out how to build R with texinfo 6
  - [libxml2](libxml2/PKGBUILD) disabled ICU which doesn't work on CRAN (Because Windows Vista)
  - [make](make/PKGBUILD) has a patch to find `sh` when called from cmd instead of bash
- - [msys2-runtime](msys2-runtime/PKGBUILD) has a patch to make msys2 not alter the `R_ARCH` 
 
 For the other msys2 packages in rtools (including dependencies of the above) we use upstream msys2 builds. This means we may need to rebuild our binaries when an upstream dependency has a major upgrades which breaks the dll ABI.
 
 Finally note that `pacman` is fully statically linked so it has no dll dependencies. Make sure our custom version of `curl` is installed when building pacman because all curl settings will be hardcoded in `pacman.exe`.
 
 ## The CI system
-
-The CI has been configured to build these packages using the latest existing Rtools installer and deploys to:
-
- - 32 bit: http://dl.bintray.com/rtools/i686/
- - 64 bit: http://dl.bintray.com/rtools/x86_64/
 
 These binaries are automatically downloaded when building the [rtools-installer](https://github.com/r-windows/rtools-installer) bundle.

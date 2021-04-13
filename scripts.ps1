@@ -5,8 +5,8 @@ $RTOOLS_EXE = "rtools40-${RTOOLS_ARCH}.exe"
 #$ErrorActionPreference = "Stop";
 
 ### Use for bootstrapping installation
-$RTOOLS_MIRROR = "https://dl.bintray.com/rtools/installer/"
-# $RTOOLS_MIRROR = "https://cloud.r-project.org/bin/windows/Rtools/"
+# $RTOOLS_MIRROR = "https://dl.bintray.com/rtools/installer/"
+$RTOOLS_MIRROR = "https://ftp.opencpu.org/archive/rtools40/"
 # $RTOOLS_MIRROR = "https://ftp.opencpu.org/archive/rtools/4.0/"
 
 ### InnoSetup Mirror
@@ -69,4 +69,10 @@ Function InstallMSYS32 {
 	7z x $tarPath -y -oC:\ | Out-Null
 	del $zipPath
 	del $tarPath
+}
+
+Function UpdateMSYS2 {
+	C:\msys64\usr\bin\pacman --noconfirm -Sy
+	C:\msys64\usr\bin\pacman --noconfirm --needed -S msys2-runtime msys2-runtime-devel mintty
+	C:\msys64\usr\bin\pacman --noconfirm --needed -S bash pacman
 }

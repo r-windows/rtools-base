@@ -31,14 +31,14 @@ message 'Building packages' "${packages[@]}"
 execute 'Approving recipe quality' check_recipe_quality
 
 for package in "${packages[@]}"; do
-    execute 'Building binary' makepkg --noconfirm --skippgpcheck --nocheck --syncdeps --rmdeps --cleanbuild
-    execute 'Building source' makepkg --noconfirm --skippgpcheck --allsource --config '/etc/makepkg_mingw64.conf'
+    execute 'Building binary' makepkg --noconfirm --noprogressbar --skippgpcheck --nocheck --syncdeps --rmdeps --cleanbuild
+    execute 'Building source' makepkg --noconfirm --noprogressbar --skippgpcheck --allsource
     if [ "${package}" != "msys2-runtime" ]; then
         # Cannot hotswap runtime from this bash script using that runtime
-        execute 'Installing' yes:pacman --noprogressbar --upgrade *.pkg.tar.xz
+        execute 'Installing' yes:pacman --noprogressbar --upgrade *.pkg.tar.zst
     fi
     execute 'Checking Binaries' find ./pkg -regex ".*\.\(exe\|dll\|a\|pc\)" || true
-    deploy_enabled && mv "${package}"/*.pkg.tar.xz artifacts
+    deploy_enabled && mv "${package}"/*.pkg.tar.zst artifacts
     deploy_enabled && mv "${package}"/*.src.tar.gz sourcepkg
     unset package
 done
