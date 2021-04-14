@@ -94,10 +94,9 @@ _build_add() {
 # Download previous artifact
 _download_previous() {
     local filenames=("${@}")
-    [[ "${DEPLOY_PROVIDER}" = bintray ]] || return 1
     for filename in "${filenames[@]}"; do
-        # Don't use https here in case the build messes with ca-certificates
-        if ! wget --no-verbose "http://dl.bintray.com/${BINTRAY_TARGET}/${BINTRAY_REPOSITORY}/${filename}"; then
+        if ! curl -fsSOL "http://ftp.opencpu.org/rtools/x86_64/${filename}"; then
+            echo "Failed to get http://ftp.opencpu.org/rtools/x86_64/${filename}"
             rm -f "${filenames[@]}"
             return 1
         fi
@@ -130,7 +129,7 @@ execute(){
 
 # Update system
 update_system() {
-    repman add ci.msys 'https://dl.bintray.com/alexpux/msys2' || return 1
+    #repman add ci.msys 'https://dl.bintray.com/alexpux/msys2' || return 1
     pacman --noconfirm --noprogressbar --sync --refresh --refresh --sysupgrade --sysupgrade || return 1
     test -n "${DISABLE_QUALITY_CHECK}" && return 0 # TODO: remove this option when not anymore needed
     pacman --noconfirm --needed --noprogressbar --sync ci.msys/pactoys
@@ -162,13 +161,12 @@ create_build_references() {
 create_pacman_repository() {
     local name="${1}"
     _download_previous "${name}".{db,files}{,.tar.xz}
-    repo-add "${name}.db.tar.xz" *.pkg.tar.xz
+    repo-add "${name}.db.tar.xz" *.pkg.tar.zst
 }
 
 # Deployment is enabled
 deploy_enabled() {
     test -n "${BUILD_URL}" || return 1
-    [[ "${DEPLOY_PROVIDER}" = bintray ]] || return 1
     local repository_account="$(git remote get-url origin | cut -d/ -f4)"
     [[ "${repository_account,,}" = "r-windows" ]]
 }

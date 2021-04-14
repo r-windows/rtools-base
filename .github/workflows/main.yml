@@ -1,0 +1,58 @@
+name: main
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MSYS
+          install: git
+          update: true
+
+      - name: Switch to Rtools
+        run: |
+          Copy-Item pacman.conf -Destination "C:\msys64\etc\pacman.conf"
+          C:\msys64\usr\bin\bash --login -c "pacman --noconfirm -Syyuu"
+          C:\msys64\usr\bin\bash --login -c "pacman --noconfirm -Suu"
+
+      - name: CI-Build
+        run: ./ci-build.sh
+        env:
+          BUILD_URL: https://github.com/${{github.repository}}/actions/runs/${{github.run_id}}
+          PACMAN_REPOSITORY: rtools
+        shell: msys2 {0}
+
+      - name: "Upload binary package"
+        uses: actions/upload-artifact@v2
+        with:
+          name: x86_64
+          path: artifacts/
+
+  deploy:
+    name: Deploy to staging server
+    runs-on: ubuntu-20.04
+    needs: [build]
+    if: success() && github.ref == 'refs/heads/master'
+    steps:
+      - name: Get artifacts for deployment
+        uses: actions/download-artifact@v2
+      - id: deployment
+        name: Uploading files
+        run: |
+          ls -ltrR
+          eval $(ssh-agent -s)
+          ssh-add <(echo "$STAGINGKEY")
+          echo 'put -pr .' | sftp -oStrictHostKeyChecking=no "${STAGINGUSER}@ftp.opencpu.org:/rtools"
+          exit ${PIPESTATUS[1]}
+        env:
+          STAGINGUSER: ${{ secrets.STAGINGUSER }}
+          STAGINGKEY: ${{ secrets.STAGINGKEY }}

@@ -7,8 +7,8 @@
 # Configure
 cd "$(dirname "$0")"
 source 'ci-library.sh'
-deploy_enabled && mkdir artifacts
-deploy_enabled && mkdir sourcepkg
+mkdir artifacts
+mkdir sourcepkg
 git_config user.email 'ci@msys2.org'
 git_config user.name  'MSYS2 Continuous Integration'
 git remote add upstream 'https://github.com/r-windows/rtools-base'
@@ -16,7 +16,7 @@ git fetch --quiet upstream
 
 # Install common build tools
 pacman -Syyu --noconfirm
-pacman --noconfirm --needed -S curl bsdtar pkg-config git patch libtool make autoconf automake gcc findutils bison tar zip p7zip flex gettext wget texinfo
+pacman --noconfirm --needed -S pactoys curl bsdtar pkg-config git patch libtool make autoconf automake gcc findutils bison tar zip p7zip flex gettext wget texinfo
 
 # Detect
 list_commits  || failure 'Could not detect added commits'
@@ -31,20 +31,20 @@ message 'Building packages' "${packages[@]}"
 execute 'Approving recipe quality' check_recipe_quality
 
 for package in "${packages[@]}"; do
-    execute 'Building binary' makepkg --noconfirm --skippgpcheck --nocheck --syncdeps --rmdeps --cleanbuild
-    execute 'Building source' makepkg --noconfirm --skippgpcheck --allsource --config '/etc/makepkg_mingw64.conf'
+    execute 'Building binary' makepkg --noconfirm --noprogressbar --skippgpcheck --nocheck --syncdeps --rmdeps --cleanbuild
+    execute 'Building source' makepkg --noconfirm --noprogressbar --skippgpcheck --allsource
     if [ "${package}" != "msys2-runtime" ]; then
         # Cannot hotswap runtime from this bash script using that runtime
-        execute 'Installing' yes:pacman --noprogressbar --upgrade *.pkg.tar.xz
+        execute 'Installing' yes:pacman --noprogressbar --upgrade *.pkg.tar.zst
     fi
     execute 'Checking Binaries' find ./pkg -regex ".*\.\(exe\|dll\|a\|pc\)" || true
-    deploy_enabled && mv "${package}"/*.pkg.tar.xz artifacts
-    deploy_enabled && mv "${package}"/*.src.tar.gz sourcepkg
+    mv "${package}"/*.pkg.tar.zst artifacts
+    mv "${package}"/*.src.tar.gz sourcepkg
     unset package
 done
 
 # Deploy
-deploy_enabled && cd artifacts || success 'All packages built successfully'
+cd artifacts || success 'All packages built successfully'
 execute 'Generating pacman repository' create_pacman_repository "${PACMAN_REPOSITORY:-ci-build}"
 execute 'Generating build references'  create_build_references  "${PACMAN_REPOSITORY:-ci-build}"
 execute 'SHA-256 checksums' sha256sum *

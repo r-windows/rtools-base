@@ -2,5 +2,5 @@
 ## RTOOLS repository mirrorlist
 ##
 
-Server = https://dl.bintray.com/rtools/$arch
+Server = https://ftp.opencpu.org/rtools/$arch/
 SigLevel = Never

@@ -1,5 +1,5 @@
-PYTHON_SITELIB=usr/lib/python2.7/site-packages
-PYTHON_LIB=usr/lib/python2.7
+PYTHON_SITELIB=usr/lib/python3.8/site-packages
+PYTHON_LIB=usr/lib/python3.8
 
 python_optimize() {
   local pyd
