@@ -15,7 +15,7 @@ The Rtools40 runtime consists of subset of [msys2](https://www.msys2.org/) with 
  - [curl](curl/PKGBUILD) uses our custom [curl-ca-bundle](curl-ca-bundle/PKGBUILD) instead of the annoying [ca-certificates](https://github.com/Alexpux/MSYS2-packages/blob/master/ca-certificates/PKGBUILD)
  - [pacman](pacman/PKGBUILD) has been rebuild with the above.
  - [tar](tar/PKGBUILD) has some custom patch from BDR for backward compatibility with old rtools
- - [texinfo](texinfo/PKGBUILD) ships texinfo 5 because I couldn't figure out how to build R with texinfo 6
+ - [texindex-bat](texindex-bat/PKGBUILD) MikTeX compatible wrapper for texindex
  - [libxml2](libxml2/PKGBUILD) disabled ICU which doesn't work on CRAN (Because Windows Vista)
  - [make](make/PKGBUILD) has a patch to find `sh` when called from cmd instead of bash
 
