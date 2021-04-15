@@ -1,0 +1,17 @@
+# Maintainer: Jeroen Ooms
+
+pkgname=texindex-bat
+pkgver=9000
+pkgrel=1
+pkgdesc="MikTeX compatible wrapper for texindex"
+arch=('any')
+url="https://cran.r-project.org/bin/windows/Rtools/"
+license=('GPL')
+depends=('texinfo-tex')
+source=(texindex.bat)
+sha256sums=('SKIP')
+
+package() {
+  mkdir -p ${pkgdir}/usr/bin
+  install -m644 ${srcdir}/texindex.bat ${pkgdir}/usr/bin/
+}

@@ -4,6 +4,7 @@ PKGBUILD eol=lf
 *.patch eol=lf
 *.diff eol=lf
 *.sh eol=lf
+*.bat text eol=crlf
 
 # Denote all files that are truly binary and should not be modified
 *.7z binary
