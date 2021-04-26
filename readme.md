@@ -1,8 +1,8 @@
-# Rtools Base [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/r-windows/rtools-base)](https://ci.appveyor.com/project/jeroen/rtools-base)
+# Rtools Base [![Build Status](https://github.com/r-windows/rtools-base/actions/workflows/main.yml/badge.svg)](https://github.com/r-windows/rtools-base/actions)
 
 > Rtools40 msys2 runtime packages
 
-A few core msys2 runtime packages that were altered from [upstream](https://github.com/alexpux/msys2-packages) msys2 to work better for R and CRAN.
+A few core msys2 runtime packages that were altered from [upstream](https://github.com/msys2/msys2-packages) msys2 to work better for R and CRAN.
 
 These packages are only needed to build the rtools40 runtime environment itself, regular R users and package developers don't need to be concerned with this at all. The mingw-w64 toolchains and c/c++ libraries for building R and R packages are in the [rtools-packages](https://github.com/r-windows/rtools-packages) repository.
 
@@ -12,7 +12,7 @@ The Rtools40 runtime consists of subset of [msys2](https://www.msys2.org/) with 
 
  - [pacman-mirrors](pacman-mirrors/PKGBUILD) points to our custom rtools repos
  - [gnupg](gnupg/PKGBUILD) uses gpg1 instead of the much heavier gpg2
- - [curl](curl/PKGBUILD) uses our custom [curl-ca-bundle](curl-ca-bundle/PKGBUILD) instead of the annoying [ca-certificates](https://github.com/Alexpux/MSYS2-packages/blob/master/ca-certificates/PKGBUILD)
+ - [curl](curl/PKGBUILD) uses our custom [curl-ca-bundle](curl-ca-bundle/PKGBUILD) instead of the annoying [ca-certificates](https://github.com/msys2/MSYS2-packages/blob/master/ca-certificates/PKGBUILD)
  - [pacman](pacman/PKGBUILD) has been rebuild with the above.
  - [tar](tar/PKGBUILD) has some custom patch from BDR for backward compatibility with old rtools
  - [texindex-bat](texindex-bat/PKGBUILD) MikTeX compatible wrapper for texindex
