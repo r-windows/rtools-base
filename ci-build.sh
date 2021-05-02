@@ -16,7 +16,7 @@ git fetch --quiet upstream
 
 # Install common build tools
 pacman -Syyu --noconfirm
-pacman --noconfirm --needed -S pactoys curl bsdtar pkg-config git patch libtool make autoconf automake gcc findutils bison tar zip p7zip flex gettext wget texinfo
+pacman --noconfirm --needed -S curl-ca-bundle pactoys curl bsdtar pkg-config git patch libtool make autoconf automake gcc findutils bison tar zip p7zip flex gettext wget texinfo
 
 # Detect
 list_commits  || failure 'Could not detect added commits'
@@ -46,6 +46,7 @@ done
 # Deploy
 cd artifacts || success 'All packages built successfully'
 execute 'Generating pacman repository' create_pacman_repository "${PACMAN_REPOSITORY:-ci-build}"
+repo-remove "${PACMAN_REPOSITORY}.db.tar.xz" "pacman-mirrors"
 execute 'Generating build references'  create_build_references  "${PACMAN_REPOSITORY:-ci-build}"
 execute 'SHA-256 checksums' sha256sum *
 success 'All artifacts built successfully'
