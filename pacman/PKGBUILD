@@ -4,7 +4,7 @@
 
 pkgname=pacman
 pkgver=5.2.2
-pkgrel=9000
+pkgrel=9800
 pkgdesc="A library-based package manager with dependency support (MSYS2 port)"
 arch=('i686' 'x86_64')
 url="https://www.archlinux.org/pacman/"
@@ -14,7 +14,7 @@ depends=('bash>=4.2.045'
          'expat'
          'gettext'
          'curl-ca-bundle'
-         'pacman-mirrors'
+         'rtools-mirrors'
          'msys2-keyring'
          'which'
          'bzip2'

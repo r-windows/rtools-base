@@ -1,0 +1,26 @@
+# Maintainer: Jeroen Ooms
+
+pkgname=rtools-mirrors
+pkgver=20210502
+pkgrel=1
+pkgdesc="MSYS2 mirror list for use by rtools"
+arch=('any')
+url="https://cran.r-project.org/bin/windows/Rtools/"
+license=('GPL')
+source=(rtools.msys
+        rtools.mingw32
+        rtools.mingw64
+        rtools.ucrt64)
+sha256sums=('SKIP'
+			'SKIP'
+			'SKIP'
+			'SKIP'
+      'SKIP')
+
+package() {
+  mkdir -p ${pkgdir}/etc/pacman.d
+  install -m644 ${srcdir}/rtools.msys ${pkgdir}/etc/pacman.d/
+  install -m644 ${srcdir}/rtools.mingw32 ${pkgdir}/etc/pacman.d/
+  install -m644 ${srcdir}/rtools.mingw64 ${pkgdir}/etc/pacman.d/
+  install -m644 ${srcdir}/rtools.ucrt64 ${pkgdir}/etc/pacman.d/
+}
