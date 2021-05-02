@@ -1,6 +1,0 @@
-##
-## RTOOLS repository mirrorlist
-##
-
-Server = https://ftp.opencpu.org/rtools/$arch/
-SigLevel = Never

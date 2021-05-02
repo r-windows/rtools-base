@@ -18,11 +18,15 @@ jobs:
           install: git
           update: true
 
+      - id: findpath
+        run: echo "::set-output name=MSYS2PATH::$(cygpath -w /)"
+        shell: msys2 {0}
+
       - name: Switch to Rtools
         run: |
-          Copy-Item pacman.conf -Destination "C:\msys64\etc\pacman.conf"
-          C:\msys64\usr\bin\bash --login -c "pacman --noconfirm -Syyuu"
-          C:\msys64\usr\bin\bash --login -c "pacman --noconfirm -Suu"
+          Copy-Item pacman.conf -Destination "${{ steps.findpath.outputs.MSYS2PATH }}etc\pacman.conf"
+          ${{ steps.findpath.outputs.MSYS2PATH }}usr\bin\bash --login -c "pacman --noconfirm -Syyuu"
+          ${{ steps.findpath.outputs.MSYS2PATH }}usr\bin\bash --login -c "pacman --noconfirm -Suu"
 
       - name: CI-Build
         run: ./ci-build.sh

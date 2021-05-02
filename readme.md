@@ -10,7 +10,7 @@ These packages are only needed to build the rtools40 runtime environment itself,
 
 The Rtools40 runtime consists of subset of [msys2](https://www.msys2.org/) with a few alterations:
 
- - [pacman-mirrors](pacman-mirrors/PKGBUILD) points to our custom rtools repos
+ - [rtools-mirrors](rtools-mirrors/PKGBUILD) replaces `pacman-mirrors` with our custom rtools-packages repos
  - [gnupg](gnupg/PKGBUILD) uses gpg1 instead of the much heavier gpg2
  - [curl](curl/PKGBUILD) uses our custom [curl-ca-bundle](curl-ca-bundle/PKGBUILD) instead of the annoying [ca-certificates](https://github.com/msys2/MSYS2-packages/blob/master/ca-certificates/PKGBUILD)
  - [pacman](pacman/PKGBUILD) has been rebuild with the above.
