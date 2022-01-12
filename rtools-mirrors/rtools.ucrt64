@@ -2,7 +2,7 @@
 ## UCRT64 rtools-packages repositories
 ##
 # Server = https://ftp.opencpu.org/rtools/ucrt64/
+Server = https://r-windows.github.io/mirror/ucrt64/
 Server = https://cloud.r-project.org/bin/windows/Rtools/4.0/ucrt64/
 Server = https://cran.r-project.org/bin/windows/Rtools/4.0/ucrt64/
-Server = https://r-windows.github.io/mirror/ucrt64/
 SigLevel = Never

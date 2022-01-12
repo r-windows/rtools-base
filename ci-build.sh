@@ -48,5 +48,8 @@ cd artifacts || success 'All packages built successfully'
 execute 'Generating pacman repository' create_pacman_repository "${PACMAN_REPOSITORY:-ci-build}"
 #repo-remove "${PACMAN_REPOSITORY}.db.tar.xz" "pacman-mirrors"
 execute 'Generating build references'  create_build_references  "${PACMAN_REPOSITORY:-ci-build}"
+if [ "$packages" == "rtools-mirrors" ]; then
+  execute 'Also updating rtools-mirrors db index' create_pacman_repository "mirrors"
+fi
 execute 'SHA-256 checksums' sha256sum *
 success 'All artifacts built successfully'
