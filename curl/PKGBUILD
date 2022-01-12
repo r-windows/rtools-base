@@ -3,12 +3,12 @@
 pkgbase=curl
 pkgname=('curl' 'libcurl' 'libcurl-devel' 'curl-ca-bundle')
 pkgver=7.64.1
-pkgrel=9500
+pkgrel=9800
 pkgdesc="Multi-protocol file transfer utility"
 arch=('i686' 'x86_64')
 url="https://curl.haxx.se"
 license=('MIT')
-makedepends=('openssl-devel' 'zlib-devel')
+makedepends=('openssl-devel' 'zlib-devel' 'autotools')
 options=('!libtool' 'strip' '!debug')
 source=("https://curl.haxx.se/download/${pkgname}-${pkgver}.tar.bz2"
         curl-7.55.1-msys2.patch
